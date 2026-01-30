@@ -9,13 +9,13 @@ export interface BusRouteFeatureCollection {
 
 export interface BusRouteFeature {
     type: "Feature";
-    id?: string;
+    id: string;
 
     /**
      * [minLon, minLat, maxLon, maxLat]
      * Standard GeoJSON bounding box format, used for map viewport fitting.
      */
-    bbox?: [number, number, number, number];
+    bbox: [number, number, number, number];
 
     geometry: {
         type: "LineString";
@@ -28,32 +28,27 @@ export interface BusRouteFeature {
 export interface BusRouteProperties {
     route_id: string;
     route_no: string;
-
-    meta?: {
-        total_dist?: number; // Unit: meter (m)
-        source_ver?: string; // ISO 8601 Date String
-    };
-
-    indices?: {
-        /**
-         * The index in the coordinates array where the turn point is located
-         * (Used for distinguishing up/down directions and arrow rendering branching points)
-         */
-        turn_idx?: number;
-
-        /**
-         * Array mapping stops[i] to coordinates[j]
-         * Example: stops[0] corresponds to coordinates[0], stops[1] corresponds to coordinates[24]
-         */
-        stop_to_coord?: number[];
-    };
-
-    stops?: Array<{
-        id: string;      // Stop ID
-        name: string;    // Stop name
-        ord: number;     // Order
-        up_down: number; // 0 = down, 1 = up
+    stops: Array<{
+        id: string;   // Stop ID
+        name: string; // Stop name
+        ord: number;  // Order
+        ud: number;   // 0 = down, 1 = up
     }>;
+
+    /**
+     * The index in the coordinates array where the turn point is located
+     * (Used for distinguishing up/down directions and arrow rendering branching points)
+     */
+    turn_idx: number;
+
+    /**
+     * Array mapping stops[i] to coordinates[j]
+     * Example: stops[0] corresponds to coordinates[0], stops[1] corresponds to coordinates[24]
+     */
+    stop_to_coord: number[];
+
+    total_dist: number; // Unit: meter (m)
+    source_ver: string; // ISO 8601 Date String
 }
 
 export type GeoPolyline = BusRouteFeatureCollection;

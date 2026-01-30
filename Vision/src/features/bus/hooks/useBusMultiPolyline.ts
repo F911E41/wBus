@@ -87,11 +87,6 @@ function getBBoxFromFeature(data: GeoPolyline): BBox | null {
         return feature.bbox;
     }
 
-    const metaBBox = (feature.properties?.meta as { bbox?: BBox } | undefined)?.bbox;
-    if (isValidBBox(metaBBox)) {
-        return metaBBox;
-    }
-
     const coords = feature.geometry?.coordinates ?? [];
     if (coords.length === 0) return null;
 

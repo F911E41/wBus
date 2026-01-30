@@ -50,7 +50,7 @@ function isFiniteNumber(value: unknown): value is number {
 function buildStopIndexMap(data: GeoPolyline): StopIndexMap | undefined {
     const feature = data.features?.[0];
     const stops = feature?.properties?.stops ?? [];
-    const stopToCoord = feature?.properties?.indices?.stop_to_coord ?? [];
+    const stopToCoord = feature?.properties?.stop_to_coord ?? [];
 
     if (stops.length === 0 || stopToCoord.length === 0) return undefined;
 
@@ -67,7 +67,7 @@ function buildStopIndexMap(data: GeoPolyline): StopIndexMap | undefined {
 
         const rawId = typeof stop.id === "string" ? stop.id.trim() : "";
         const ord = Number(stop.ord);
-        const dir = Number(stop.up_down);
+        const dir = Number(stop.ud);
 
         if (rawId) {
             map.byId[rawId] = coordIndex;
@@ -113,7 +113,7 @@ function splitByTurnIndex(coords: Coordinate[], turnIndex: number): SplitResult 
 
 /**
  * Main entry point to transform GeoJSON data into renderable Up/Down polylines.
- * Strictly adheres to the new GeoPolyline schema using `indices.turn_idx`.
+ * Strictly adheres to the new GeoPolyline schema using `turn_idx`.
  */
 export function transformPolyline(data: GeoPolyline): SplitResult {
     // Validate Feature Existence
@@ -129,8 +129,8 @@ export function transformPolyline(data: GeoPolyline): SplitResult {
     const coords = toLatLngCoords(geometry.coordinates);
 
     // Split based on Turn Index if available
-    if (properties.indices?.turn_idx !== undefined) {
-        return splitByTurnIndex(coords, properties.indices.turn_idx);
+    if (properties.turn_idx !== undefined) {
+        return splitByTurnIndex(coords, properties.turn_idx);
     }
 
     // Fallback: If no turn_idx, treat entire line as Up direction (One-way or Loop)
@@ -150,8 +150,8 @@ export function getPolylineMeta(data: GeoPolyline): PolylineMeta {
     }
 
     const feature = data.features[0];
-    const turnIndex = isFiniteNumber(feature.properties?.indices?.turn_idx)
-        ? feature.properties.indices?.turn_idx
+    const turnIndex = isFiniteNumber(feature.properties?.turn_idx)
+        ? feature.properties.turn_idx
         : undefined;
 
     return {

@@ -149,35 +149,41 @@ function useScheduleLogic(data: BusSchedule) {
 // Sub-Components (Internal)
 // ----------------------------------------------------------------------
 
-const RouteInfo = ({ details, featuredStops }: { details?: string[]; featuredStops?: Record<string, string[]> }) => (
-    <>
-        {details && details.length > 0 && (
-            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs space-y-1">
-                {details.map((detail, i) => (
-                    <p key={i} className="text-amber-800">• {detail}</p>
-                ))}
-            </div>
-        )}
+const RouteInfo = ({ details, featuredStops }: { details?: string[]; featuredStops?: Record<string, string[]> }) => {
+    const featuredEntries = Object.entries(featuredStops ?? {})
+        .map(([key, stops]) => [key, stops.filter((stop) => stop.trim().length > 0)] as const)
+        .filter(([, stops]) => stops.length > 0);
 
-        {featuredStops && Object.keys(featuredStops).length > 0 && (
-            <div className="p-3 bg-slate-50 rounded-xl text-xs">
-                <p className="font-bold text-slate-700 mb-2">{UI_TEXT.SCHEDULE.MAJOR_STOPS}</p>
-                {Object.entries(featuredStops).map(([key, stops]) => (
-                    <div key={key} className="mb-2 last:mb-0">
-                        <p className="text-[11px] text-slate-500 mb-1">{getFeaturedStopsLabel(key)}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                            {stops.map((stop, i) => (
-                                <span key={i} className="px-2 py-0.5 bg-white rounded-md text-[11px] text-slate-600 border border-slate-200">
-                                    {stop}
-                                </span>
-                            ))}
+    return (
+        <>
+            {details && details.length > 0 && (
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs space-y-1">
+                    {details.map((detail, i) => (
+                        <p key={i} className="text-amber-800">• {detail}</p>
+                    ))}
+                </div>
+            )}
+
+            {featuredEntries.length > 0 && (
+                <div className="p-3 bg-slate-50 rounded-xl text-xs">
+                    <p className="font-bold text-slate-700 mb-2">{UI_TEXT.SCHEDULE.MAJOR_STOPS}</p>
+                    {featuredEntries.map(([key, stops]) => (
+                        <div key={key} className="mb-2 last:mb-0">
+                            <p className="text-[11px] text-slate-500 mb-1">{getFeaturedStopsLabel(key)}</p>
+                            <div className="flex flex-wrap gap-1.5">
+                                {stops.map((stop, i) => (
+                                    <span key={i} className="px-2 py-0.5 bg-white rounded-md text-[11px] text-slate-600 border border-slate-200">
+                                        {stop}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-        )}
-    </>
-);
+                    ))}
+                </div>
+            )}
+        </>
+    );
+};
 
 const DayTypeSelector = ({ current, onChange }: { current: DayType; onChange: (t: DayType) => void }) => (
     <div className="flex bg-slate-200 p-1 rounded-xl">

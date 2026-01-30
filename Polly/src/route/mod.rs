@@ -24,19 +24,40 @@ use crate::utils::{
 };
 
 // ============================================================================
+// Argument Structure
+// ============================================================================
+
+#[derive(clap::Args)]
+pub struct RouteArgs {
+    /// City code to process (default: Wonju -> 32020)
+    #[arg(long, default_value = "32020")]
+    city_code: String,
+
+    /// Specific route number (if not specified, all)
+    #[arg(short, long)]
+    route: Option<String>,
+
+    /// Output directory
+    #[arg(short, long, default_value = "./storage/processed_routes")]
+    output_dir: PathBuf,
+
+    /// Update station map only and skip snapping
+    #[arg(long)]
+    station_map_only: bool,
+
+    /// Snap route paths using OSRM only (skip Tago API)
+    #[arg(long)]
+    osrm_only: bool,
+}
+
+// ============================================================================
 // Main Execution
 // ============================================================================
 
-pub async fn run(
-    city_code: String,
-    specific_route: Option<String>,
-    output_dir: PathBuf,
-    station_map_only: bool,
-    osrm_only: bool,
-) -> Result<()> {
+pub async fn run(args: RouteArgs) -> Result<()> {
     // Setup Directories
-    let raw_dir = output_dir.join("raw_routes");
-    let derived_dir = output_dir.join("derived_routes");
+    let raw_dir = args.output_dir.join("raw_routes");
+    let derived_dir = args.output_dir.join("derived_routes");
 
     ensure_dir(&raw_dir)?;
     ensure_dir(&derived_dir)?;
@@ -48,20 +69,20 @@ pub async fn run(
 
     let processor = Arc::new(BusRouteProcessor {
         service_key,
-        city_code: city_code.clone(),
+        city_code: args.city_code.clone(),
         raw_dir: raw_dir.clone(),
         derived_dir: derived_dir.clone(),
-        mapping_file: output_dir.join("routeMap.json"),
+        mapping_file: args.output_dir.join("routeMap.json"),
         tago_base_url: resolve_url("TAGO_API_URL", TAGO_URL),
         osrm_base_url: resolve_url("OSRM_API_URL", OSRM_URL),
     });
 
     // [Phase 1] Data Collection (Raw Save)
-    if !osrm_only {
+    if !args.osrm_only {
         println!("\n[Phase 1: Fetching Raw Data to {:?}]", raw_dir);
 
         let routes = processor.get_all_routes().await?;
-        let target_routes: Vec<Value> = if let Some(target_no) = specific_route.as_ref() {
+        let target_routes: Vec<Value> = if let Some(target_no) = args.route.as_ref() {
             routes
                 .into_iter()
                 .filter(|r| parse_flexible_string(&r["routeno"]) == *target_no)
@@ -109,7 +130,7 @@ pub async fn run(
 
         processor.save_route_map_json(&route_mapping, &route_details_map, &all_stops)?;
 
-        if station_map_only {
+        if args.station_map_only {
             println!("✓ Station map generated.");
             return Ok(());
         }
@@ -128,7 +149,7 @@ pub async fn run(
     let mut snap_stream = stream::iter(raw_entries)
         .map(|entry| {
             let proc = Arc::clone(&processor);
-            let specific = specific_route.clone();
+            let specific = args.route.clone();
 
             async move {
                 let path = entry.path();

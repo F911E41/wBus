@@ -19,6 +19,19 @@ use crate::config::{BASE_URL, DETAIL_URL};
 use crate::schedule::model::{ParsedSchedule, RouteMeta, TimeEntry};
 use crate::utils;
 
+// ============================================================================
+// Schedule Arguments
+// ============================================================================
+
+#[derive(clap::Args)]
+pub struct ScheduleArgs {
+    /// Specific route number to crawl (e.g., "34-1"). If omitted, all routes are crawled.
+    pub route: Option<String>,
+
+    /// Output directory for saving the schedule JSON files.
+    pub output_dir: PathBuf,
+}
+
 /// Main entry point for the schedule crawler.
 ///
 /// This function orchestrates the entire crawling process:
@@ -29,8 +42,8 @@ use crate::utils;
 /// 5. Merges the various schedules (e.g., weekday, weekend) for each route.
 /// 6. Saves the final, structured data as JSON files.
 ///
-pub async fn run(specific_route: Option<String>, output_dir: PathBuf) -> Result<()> {
-    let schedule_dir = output_dir.join("schedules");
+pub async fn run(args: ScheduleArgs) -> Result<()> {
+    let schedule_dir = args.output_dir.join("schedules");
 
     utils::ensure_dir(&schedule_dir)?;
 
@@ -54,7 +67,7 @@ pub async fn run(specific_route: Option<String>, output_dir: PathBuf) -> Result<
     let document = Html::parse_document(&resp);
 
     // Extract basic route information and the target route IDs to crawl.
-    let (route_meta_map, targets) = extract_route_info(&document, specific_route.as_deref())?;
+    let (route_meta_map, targets) = extract_route_info(&document, args.route.as_deref())?;
 
     println!("✓ Found info for {} routes", route_meta_map.len());
     println!("✓ Found {} route schedules to process", targets.len());

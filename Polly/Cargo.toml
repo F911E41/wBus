@@ -48,3 +48,6 @@ url = "2.5"
 # For EUC-KR encoding support
 encoding_rs = "0.8"
 percent-encoding = "2.3"
+
+# Logging
+tracing-subscriber = "0.3.22"

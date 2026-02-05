@@ -1,9 +1,5 @@
 import { UI_TEXT } from "@core/config/locale";
 
-// ----------------------------------------------------------------------
-// Formatting Utilities
-// ----------------------------------------------------------------------
-
 /**
  * Converts seconds to minutes, rounding up to the nearest whole number.
  * Ensures the result is never negative.
@@ -11,8 +7,8 @@ import { UI_TEXT } from "@core/config/locale";
  * @returns The duration in minutes (e.g., 65s -> 2m)
  */
 export function secondsToMinutes(seconds: number): number {
-  if (seconds <= 0) return 0;
-  return Math.ceil(seconds / 60);
+    if (seconds <= 0) return 0;
+    return Math.ceil(seconds / 60);
 }
 
 /**
@@ -22,8 +18,8 @@ export function secondsToMinutes(seconds: number): number {
  * @returns The first 2 characters of the string
  */
 export function formatVehicleType(vehicleType: string): string {
-  if (!vehicleType) return "";
-  return vehicleType.slice(0, 2);
+    if (!vehicleType) return "";
+    return vehicleType.slice(0, 2);
 }
 
 /**
@@ -32,5 +28,5 @@ export function formatVehicleType(vehicleType: string): string {
  * @returns The formatted string (e.g., "100번" in KR or "No. 100" depending on locale)
  */
 export function formatRouteNumber(routeNo: string): string {
-  return `${routeNo}${UI_TEXT.BUS_LIST.TITLE_ROUTE}`;
+    return `${routeNo}${UI_TEXT.BUS_LIST.TITLE_ROUTE}`;
 }

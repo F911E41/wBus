@@ -1,7 +1,7 @@
 /**
  * Parse environment variable as string with fallback
- * @param key 
- * @param fallback 
+ * @param key
+ * @param fallback
  * @returns Parsed value
  */
 

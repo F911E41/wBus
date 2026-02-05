@@ -8,12 +8,12 @@ import dynamic from "next/dynamic";
 // ----------------------------------------------------------------------
 
 type MapWrapperProps = {
-  /** List of route IDs to render on the map */
-  routeNames: string[];
-  /** Callback fired when the map is fully initialized */
-  onReady?: () => void;
-  /** Callback fired when a user interacts with a route */
-  onRouteChange?: (routeName: string) => void;
+    /** List of route IDs to render on the map */
+    routeNames: string[];
+    /** Callback fired when the map is fully initialized */
+    onReady?: () => void;
+    /** Callback fired when a user interacts with a route */
+    onRouteChange?: (routeName: string) => void;
 };
 
 // ----------------------------------------------------------------------
@@ -28,9 +28,9 @@ type MapWrapperProps = {
  * on the server would cause "window is not defined" errors.
  */
 const DynamicMap = dynamic(() => import("./Map"), {
-  ssr: false,
-  // Optional: You could add a lightweight placeholder here to prevent layout shift
-  // loading: () => <div className="w-full h-full bg-slate-100" /> 
+    ssr: false,
+    // Optional: You could add a lightweight placeholder here to prevent layout shift
+    // loading: () => <div className="w-full h-full bg-slate-100" />
 });
 
 // ----------------------------------------------------------------------
@@ -41,11 +41,11 @@ const DynamicMap = dynamic(() => import("./Map"), {
  * Wrapper component to ensure the Map is only rendered on the Client Side.
  */
 const MapWrapper: React.FC<MapWrapperProps> = (props) => {
-  return (
-    <DynamicMap
-      {...props}
-    />
-  );
+    return (
+        <DynamicMap
+            {...props}
+        />
+    );
 };
 
 export default MapWrapper;

@@ -1,10 +1,8 @@
-
 import { useMemo } from "react";
 
-import { useClosestStopOrd } from "@bus/hooks/useBusStop";
+import { useBusStop, useClosestStopOrd } from "@bus/hooks/useBusStop";
 import { useBusLocationData } from "@bus/hooks/useBusLocation";
 import { useBusDirection } from "@bus/hooks/useBusDirection";
-import { useBusStop } from "@bus/hooks/useBusStop";
 
 export const useBusSortedList = (routeName: string) => {
     const { data: mapList, error: mapError, hasFetched: locationFetched } = useBusLocationData(routeName);

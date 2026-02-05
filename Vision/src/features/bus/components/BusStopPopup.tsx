@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { AlertTriangle, Bus, Clock, MapPin, ChevronRight } from "lucide-react";
+import { AlertTriangle, Bus, ChevronRight, Clock, MapPin } from "lucide-react";
 
 import { UI_TEXT } from "@core/config/locale";
 
@@ -76,7 +76,8 @@ function ArrivalItem({
                         {minutes === 0 ? UI_TEXT.BUS_ITEM.ARRIVING_SOON : `${minutes}${UI_TEXT.TIME.MINUTE_SUFFIX}`}
                     </span>
                 </div>
-                <div className="flex items-center text-[10px] text-slate-400 font-bold group-hover:text-blue-500 transition-colors">
+                <div
+                    className="flex items-center text-[10px] text-slate-400 font-bold group-hover:text-blue-500 transition-colors">
                     {UI_TEXT.BUS_ITEM.SHOW_ROUTE} <ChevronRight className="w-3 h-3" />
                 </div>
             </div>
@@ -109,7 +110,8 @@ function ArrivalList({
     if (error) {
         return (
             <div className="p-4">
-                <div className="flex flex-col items-center gap-2 p-4 bg-red-50 rounded-2xl border border-red-100 text-center">
+                <div
+                    className="flex flex-col items-center gap-2 p-4 bg-red-50 rounded-2xl border border-red-100 text-center">
                     <AlertTriangle className="w-8 h-8 text-red-400" />
                     <p className="text-sm text-red-800 font-bold leading-tight">{error}</p>
                 </div>

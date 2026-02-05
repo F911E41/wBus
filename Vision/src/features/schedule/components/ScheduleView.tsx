@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect, memo } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { DAY_TYPES, DayType } from "@core/config/env";
-import { UI_TEXT, DAY_LABELS } from "@core/config/locale";
+import { DAY_LABELS, UI_TEXT } from "@core/config/locale";
 
 import { getCurrentDayType } from "@schedule/utils/time";
 
@@ -170,7 +170,8 @@ const RouteInfo = ({ details, featuredStops }: { details?: string[]; featuredSto
                             <p className="text-[11px] text-slate-500 mb-1">{getFeaturedStopsLabel(key)}</p>
                             <div className="flex flex-wrap gap-1.5">
                                 {stops.map((stop, i) => (
-                                    <span key={i} className="px-2 py-0.5 bg-white rounded-md text-[11px] text-slate-600 border border-slate-200">
+                                    <span key={i}
+                                        className="px-2 py-0.5 bg-white rounded-md text-[11px] text-slate-600 border border-slate-200">
                                         {stop}
                                     </span>
                                 ))}
@@ -238,7 +239,8 @@ const NextBusStatus = ({
     <div className="bg-blue-50 rounded-xl shadow-sm border border-blue-200 overflow-hidden">
         <div className="grid grid-cols-[56px_1fr]">
             {/* Time Column */}
-            <div className="p-3 text-center border-r border-blue-200 font-mono font-bold flex flex-col items-center gap-1 text-blue-600 text-sm">
+            <div
+                className="p-3 text-center border-r border-blue-200 font-mono font-bold flex flex-col items-center gap-1 text-blue-600 text-sm">
                 <div>{hour}</div>
                 {nextBus?.timeUntil && (
                     <div className="text-[11px] font-normal text-blue-500">

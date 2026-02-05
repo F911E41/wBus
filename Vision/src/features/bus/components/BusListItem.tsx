@@ -35,7 +35,7 @@ export const BusListItem = React.memo(({ bus, routeName, getDirection, onClick }
         <li>
             <button
                 type="button"
-                className="flex w-full justify-between items-center py-2 px-2 sm:py-3 sm:px-3 cursor-pointer bg-gradient-to-r from-gray-50 to-blue-50/50 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 rounded-lg sm:rounded-xl group border border-transparent hover:border-blue-300 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-left"
+                className="flex w-full justify-between items-center py-2 px-2 sm:py-3 sm:px-3 cursor-pointer bg-linear-to-r from-gray-50 to-blue-50/50 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 rounded-lg sm:rounded-xl group border border-transparent hover:border-blue-300 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-left"
                 onClick={() => onClick(bus.gpslati, bus.gpslong)}
                 aria-label={`${bus.vehicleno} ${UI_TEXT.BUS_ITEM.CURRENT_LOC} ${stopName}`}
             >
@@ -44,10 +44,12 @@ export const BusListItem = React.memo(({ bus, routeName, getDirection, onClick }
                     2. min-w-fit: Ensure the content fits without breaking
                 */}
                 <div className="flex flex-col gap-0.5 sm:gap-1 shrink-0 min-w-fit mr-2">
-                    <span className="font-bold text-sm sm:text-base text-gray-900 group-hover:text-blue-700 transition-colors whitespace-nowrap">
+                    <span
+                        className="font-bold text-sm sm:text-base text-gray-900 group-hover:text-blue-700 transition-colors whitespace-nowrap">
                         {bus.vehicleno}
                     </span>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 inline-block w-fit shadow-sm">
+                    <span
+                        className="text-[10px] sm:text-[11px] font-bold text-white bg-linear-to-r from-blue-600 to-indigo-600 rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 inline-block w-fit shadow-sm">
                         {routeName}
                     </span>
                 </div>
@@ -56,12 +58,13 @@ export const BusListItem = React.memo(({ bus, routeName, getDirection, onClick }
                     1. min-w-0: Prevent flex child elements from overflowing the parent (essential for Marquee to work)
                     2. justify-end: Align to the right
                 */}
-                <div className="flex items-center gap-1 text-gray-600 group-hover:text-gray-900 text-right min-w-0 flex-1 justify-end">
+                <div
+                    className="flex items-center gap-1 text-gray-600 group-hover:text-gray-900 text-right min-w-0 flex-1 justify-end">
                     {/* Marquee Container
                         List items are narrower than popups, so we set maxLength to around 6-8 for tight fit.
                         We set max-w to prevent overly long stop names from encroaching on the vehicle number. 
                     */}
-                    <div className="text-[10px] sm:text-xs font-medium max-w-[80px] sm:max-w-[80px]">
+                    <div className="text-[10px] sm:text-xs font-medium max-w-20 sm:max-w-20">
                         <PopupMarquee text={stopName} maxLength={8} />
                     </div>
 

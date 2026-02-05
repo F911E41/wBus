@@ -139,7 +139,7 @@ async function loadJsonData<T>(resourcePath: string, contextLabel: string): Prom
 
 /**
  * Get available route IDs by scanning the local directory.
- * NOTE: This relies on the local file system even if USE_REMOTE is true, 
+ * NOTE: This relies on the local file system even if USE_REMOTE is true,
  * serving as the source of truth for which routes exist.
  */
 export async function getAvailableRouteIds(): Promise<string[]> {

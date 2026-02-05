@@ -1,6 +1,7 @@
 "use client";
 
-import { memo } from "react";
+import L from "leaflet";
+import { memo, useRef } from "react";
 
 import { MAP_SETTINGS } from "@core/config/env";
 
@@ -9,7 +10,7 @@ import { normalizeAngle } from "@map/utils/geoUtils";
 
 import BusRotatedMarker from "@bus/components/BusRotatedMarker";
 
-import type { Icon, DivIcon, LeafletEventHandlerFnMap, LatLngTuple } from "leaflet";
+import type { DivIcon, Icon, LatLngTuple, LeafletEventHandlerFnMap } from "leaflet";
 
 // ----------------------------------------------------------------------
 // Types
@@ -37,6 +38,7 @@ interface BusAnimatedMarkerProps {
 /**
  * A bus marker that smoothly animates along a polyline when its position updates.
  * Uses requestAnimationFrame for smooth 60fps animation.
+ * Optimized with direct Leaflet marker updates to bypass React re-renders during animation.
  */
 function BusAnimatedMarker({
     position,
@@ -50,7 +52,11 @@ function BusAnimatedMarker({
     eventHandlers,
     children,
 }: BusAnimatedMarkerProps) {
+    // Ref to Leaflet marker for direct DOM updates (bypasses React)
+    const markerRef = useRef<L.Marker | null>(null);
+
     // Hook handles the interpolation loop (requestAnimationFrame)
+    // Now with direct marker updates for smoother animation
     const { position: animatedPosition, angle: animatedAngle } = useAnimatedPosition(
         position,
         rotationAngle,
@@ -62,11 +68,14 @@ function BusAnimatedMarker({
             resetKey: refreshKey,
             snapIndexHint,
             snapIndexRange,
+            // Pass marker ref for direct DOM updates during animation
+            markerRef,
         }
     );
 
     return (
         <BusRotatedMarker
+            ref={markerRef}
             position={animatedPosition}
             rotationAngle={normalizeAngle(animatedAngle)}
             icon={icon}

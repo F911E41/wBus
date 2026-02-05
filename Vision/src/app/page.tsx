@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { APP_CONFIG, MAP_SETTINGS, STORAGE_KEYS } from "@core/config/env";
 
@@ -89,7 +89,8 @@ export default function HomePage() {
     return (
         <>
             <Splash isVisible={isSplashVisible} />
-            <div className="flex flex-col w-full min-h-[100svh] h-[100dvh] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+            <div
+                className="flex flex-col w-full min-h-svh h-dvh pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
                 <NavBar />
                 <div className="relative flex-1 overflow-hidden">
                     <MapWrapper
@@ -97,7 +98,8 @@ export default function HomePage() {
                         onReady={handleMapReady}
                         onRouteChange={handleRouteChange}
                     />
-                    <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.5rem)] left-[calc(env(safe-area-inset-left)+0.5rem)] z-30 flex flex-col gap-3 sm:bottom-[calc(env(safe-area-inset-bottom)+1rem)] sm:left-[calc(env(safe-area-inset-left)+1rem)]">
+                    <div
+                        className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.5rem)] left-[calc(env(safe-area-inset-left)+0.5rem)] z-30 flex flex-col gap-3 sm:bottom-[calc(env(safe-area-inset-bottom)+1rem)] sm:left-[calc(env(safe-area-inset-left)+1rem)]">
                         <BusList
                             routeNames={[activeRoute]}
                             allRoutes={allRoutes}

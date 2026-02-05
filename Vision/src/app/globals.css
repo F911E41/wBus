@@ -2,159 +2,156 @@
 @import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  /* Mapping Colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  /* Mapping Fonts */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --background: #ffffff;
+    --foreground: #171717;
+    /* Define color variables for light mode */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 /* Base Styles */
 html,
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  background: var(--background);
-  color: var(--foreground);
-  /* Use --font-sans first, then fall back to system fonts */
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
-  /* Optimize text rendering */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    background: var(--background);
+    color: var(--foreground);
+    /* Use --font-sans first, then fall back to system fonts */
+    font-family: var(--font-sans, Arial, Helvetica, sans-serif), serif;
+    /* Optimize text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Leaflet Map Overrides */
 .leaflet-container {
-  z-index: 0;
-  /* Ensure map is behind other UI elements */
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-  /* Prevent map background from flashing white during loading */
-  background: var(--background);
+    z-index: 0;
+    /* Ensure map is behind other UI elements */
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    /* Prevent map background from flashing white during loading */
+    background: var(--background);
 }
 
 /* Bus Route Labels */
 .bus-route-label {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: white;
-  font-weight: 700;
-  /* Recommend using numeric value instead of bold */
-  text-align: center;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-  /* Adjust opacity for readability */
-  margin: 0 !important;
-  font-size: 32px !important;
-  white-space: nowrap;
-  /* Prevent label wrapping */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: white;
+    font-weight: 700;
+    /* Recommend using numeric value instead of bold */
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    /* Adjust opacity for readability */
+    margin: 0 !important;
+    font-size: 32px !important;
+    white-space: nowrap;
+    /* Prevent label wrapping */
 }
 
 /* Custom Popup Styling */
 .leaflet-popup-content-wrapper {
-  padding: 0 !important;
-  overflow: hidden !important;
-  border-radius: 12px !important;
-  border: none !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-  /* Tailwind `shadow-md` */
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    /* Tailwind `shadow-md` */
 }
 
 .leaflet-popup-content {
-  margin: 0 !important;
-  width: 100% !important;
-  /* Ensure popup content font follows theme font */
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+    margin: 0 !important;
+    width: 100% !important;
+    /* Ensure popup content font follows theme font */
+    font-family: var(--font-sans, Arial, Helvetica, sans-serif), serif;
 }
 
 /* Remove and style popup tip (speech bubble tail) */
 .leaflet-popup-tip-container {
-  display: none;
+    display: none;
 }
 
 .leaflet-popup-tip {
-  background: var(--background);
-  /* Recommend using theme background color instead of white */
+    background: var(--background);
+    /* Recommend using theme background color instead of white */
 }
 
 /* Scrollbar Customization */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: #e2e8f0 transparent;
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 transparent;
 }
 
 /* Webkit (Chrome, Safari, Edge) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+    width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
-  border-radius: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
 }
 
 /* Dark Mode Scrollbar Colors */
 @media (prefers-color-scheme: dark) {
-  * {
-    scrollbar-color: #333 transparent;
-  }
+    * {
+        scrollbar-color: #333 transparent;
+    }
 
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #333;
-  }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #333;
+    }
 }
 
 /* Utilities & Animations */
 @layer utilities {
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
     }
-  }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
+    .animate-fade-in-up {
+        animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* Recommend a slightly more natural easing function */
+        opacity: 0;
+        /* Prevent flicker before animation starts */
     }
 
-    to {
-      opacity: 1;
+    .animate-fade-in {
+        animation: fade-in 0.3s ease-out forwards;
     }
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    /* Recommend a slightly more natural easing function */
-    opacity: 0;
-    /* Prevent flicker before animation starts */
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.3s ease-out forwards;
-  }
 }

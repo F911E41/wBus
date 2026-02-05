@@ -9,11 +9,11 @@ import type { BusStopArrival } from "@core/domain/station";
  * @returns A promise that resolves to an array of bus location items
  */
 export async function getBusLocationData(routeId: string): Promise<BusItem[]> {
-  const data = await fetchAPI<{
-    response?: { body?: { items?: { item?: BusItem[] } } };
-  }>(`/getBusLocation/${routeId}`);
-  const items = data.response?.body?.items?.item;
-  return items ?? [];
+    const data = await fetchAPI<{
+        response?: { body?: { items?: { item?: BusItem[] } } };
+    }>(`/getBusLocation/${routeId}`);
+    const items = data.response?.body?.items?.item;
+    return items ?? [];
 }
 
 /**
@@ -22,12 +22,12 @@ export async function getBusLocationData(routeId: string): Promise<BusItem[]> {
  * @returns A promise that resolves to an array of arrival information items
  */
 export async function getBusStopArrivalData(busStopId: string): Promise<BusStopArrival[]> {
-  const data = await fetchAPI<{
-    response?: { body?: { items?: { item?: BusStopArrival | BusStopArrival[] } } };
-  }>(`/getBusArrivalInfo/${busStopId}`);
-  const rawItem = data.response?.body?.items?.item;
-  if (!rawItem) {
-    return [];
-  }
-  return Array.isArray(rawItem) ? rawItem : [rawItem];
+    const data = await fetchAPI<{
+        response?: { body?: { items?: { item?: BusStopArrival | BusStopArrival[] } } };
+    }>(`/getBusArrivalInfo/${busStopId}`);
+    const rawItem = data.response?.body?.items?.item;
+    if (!rawItem) {
+        return [];
+    }
+    return Array.isArray(rawItem) ? rawItem : [rawItem];
 }

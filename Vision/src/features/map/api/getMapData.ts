@@ -1,4 +1,4 @@
-import { APP_CONFIG, API_CONFIG } from "@core/config/env";
+import { API_CONFIG, APP_CONFIG } from "@core/config/env";
 
 import { CacheManager } from "@core/cache/CacheManager";
 

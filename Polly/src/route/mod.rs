@@ -205,7 +205,7 @@ impl BusRouteProcessor {
         ];
 
         let url = format!("{}/getRouteNoList", self.tago_base_url);
-        let resp = reqwest::Client::new()
+        let resp: reqwest::Response = reqwest::Client::new()
             .get(&url)
             .query(&params)
             .send()
@@ -236,7 +236,7 @@ impl BusRouteProcessor {
         ];
 
         let url = format!("{}/getRouteAcctoThrghSttnList", self.tago_base_url);
-        let resp = reqwest::Client::new()
+        let resp: reqwest::Response = reqwest::Client::new()
             .get(&url)
             .query(&params)
             .send()

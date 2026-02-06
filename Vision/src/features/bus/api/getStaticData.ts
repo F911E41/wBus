@@ -3,13 +3,13 @@ import { CacheManager } from "@core/cache/CacheManager";
 
 import { API_CONFIG, APP_CONFIG } from "@core/config/env";
 
-import type { 
-    GeoPolyline, 
-    BusStop, 
-    StationLocation, 
-    RouteDetail, 
+import type {
+    GeoPolyline,
+    BusStop,
+    StationLocation,
+    RouteDetail,
     RouteInfo,
-    StaticData 
+    StaticData
 } from "@core/domain";
 
 /**
